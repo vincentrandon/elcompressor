@@ -1,5 +1,6 @@
 # elcompressor
-![logo](static/home/assets/compress_logotype.png)
+
+<img alt="logo" height="200" src="static/home/assets/compress_logotype.png" width="200"/>
 
 ## Description
 
