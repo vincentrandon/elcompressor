@@ -4,7 +4,7 @@
 
 ## Description
 
-This Django project is designed to automate image compression. elcompressor is a tiny Django Saas that allows you to compress your images in a few clicks. It is based on a custom algorithm and the [Sendinblue API](https://developers.sendinblue.com/). 
+This Django project is designed to automate image compression. elcompressor is a tiny Django Saas that allows you to compress your images in a few clicks. It is based on a custom algorithm. 
 This script also comes with an API that allows you to compress your images directly from your website.
 
 ## Requirements
