@@ -10,6 +10,9 @@ This script also comes with an API that allows you to compress your images direc
 ## Requirements
 - Python 3.10
 - Django 4.2.3
+- TailwindCSS
+- AlpineJS
+- HTMX
 - Stripe account
 - Brevo (Sendinblue) account
 
