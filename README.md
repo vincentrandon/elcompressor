@@ -22,6 +22,9 @@ This script also comes with an API that allows you to compress your images direc
 - Setting up environment variables:
     - Copy the `.env.dist` file to `.env`
     - Fill in the environment variables in the `.env` file
+- Run the migrations with `python manage.py makemigrations' and `python manage.py migrate`
+- Create a superuser with `python manage.py createsuperuser`
+- Run the server with `python manage.py runserver`
 
 ## Usage
 - The script is designed to be easily reproducible
