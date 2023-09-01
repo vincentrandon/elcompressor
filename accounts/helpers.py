@@ -19,9 +19,6 @@ def send_mail_sendinblue(template_id: int, to: str, sender: str=os.getenv('EMAIL
             'replyTo': {'email': reply_to, 'name': 'Vincent'},
             'params': kwargs}
 
-    print(data)
-
-
     if bcc:
         data['bcc'] = [{'email': bcc}]
 

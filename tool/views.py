@@ -19,9 +19,6 @@ from tool.permissions import HasValidAPIKey
 from tool.serializers import ImageSerializer
 
 
-# Create your views here.
-
-
 def display_index(request: HttpRequest):
     form = ImageForm()
     if request.method == 'POST':

@@ -24,10 +24,8 @@ def login_user(request: HttpRequest) -> render:
     else:
         if request.method == 'POST':
             username = request.POST['email']
-            print(username)
             password = request.POST['password']
             user = auth.authenticate(username=username, password=password)
-            print(user)
             if user is not None:
                 login(request, user)
                 return redirect('tool:index')
@@ -87,7 +85,7 @@ def forgot_password(request: HttpRequest) -> render:
             password = get_random_string(length=10)
             user.set_password(password)
             user.save()
-            mail = send_mail_sendinblue(
+            send_mail_sendinblue(
                 template_id=2,
                 to=str(email),
                 email=email,
@@ -96,7 +94,6 @@ def forgot_password(request: HttpRequest) -> render:
             messages.success(request, ("Your password has been reset. Please check your email."))
             return redirect('accounts:login')
         else:
-            print(form.errors)
             messages.error(request, (form.errors))
     return render(request, 'registration/forgot-password.html', context={'form': form})
 
@@ -144,7 +141,6 @@ def edit_password(request: HttpRequest) -> render:
             form.save()
             return render(request, 'profile/partials/partial-edit-password.html', context={'user': user, 'form': form})
         else:
-            print(form.errors)
             messages.error(request, (form.errors))
 
     return render(request, 'profile/partials/partial-edit-password.html', context={'user': user, 'form': form})
@@ -154,9 +150,7 @@ def generate_api_key(request: HttpRequest) -> render:
     user = request.user
     form = GenerateApiKeyForm()
     if request.method == 'POST':
-        print(request.POST)
         form = GenerateApiKeyForm(request.POST)
-        print(form)
         if form.is_valid():
             UserAPIKey.objects.create_key(name=request.user.username, user=user)
             return render(request, 'profile/partials/partial-generate-api-key.html',
@@ -230,7 +224,6 @@ def create_checkout_session(request: HttpRequest) -> JsonResponse:
                     }
                 ]
             )
-            print(checkout_session)
             return JsonResponse({'sessionId': checkout_session['id']})
         except Exception as e:
             return JsonResponse({'error': str(e)})
@@ -302,8 +295,8 @@ def cancel_subscription(request: HttpRequest) -> JsonResponse:
         stripe_customer = StripeCustomer.objects.get(user=user)
         stripe_subscription_id = stripe_customer.stripe_subscription_id
         subscription = stripe.Subscription.retrieve(stripe_subscription_id)
-        print(subscription)
         subscription.delete()
+        # We update the StripeCustomer object to reflect the cancellation
         stripe_customer.subscription_cancelled = True
         stripe_customer.subscription_cancelled_date = datetime.utcfromtimestamp(subscription['canceled_at'])
         stripe_customer.save()
