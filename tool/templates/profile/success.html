@@ -1,0 +1,26 @@
+{% extends 'base_user.html' %}
+{% block content %}
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <h2 class="mx-auto mt-8 max-w-6xl text-4xl font-medium leading-6 text-gray-900 text-center">
+            Success</h2>
+        <div class="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-1">
+            <div class="overflow-hidden rounded-lg bg-white justify-center">
+                <div class="p-5">
+                    <div class="flex flex-col items-center space-y-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor" class="w-20 h-20 text-green-500">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <h3 class="text-xl font-medium">Your payment has been accepted!</h3>
+                        <p class="text-md">You can now use <span class="text-orange-600 font-bold">elcompressor</span>
+                            as much as you want.</p>
+                        <button class="mt-10 bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-500"><a
+                                href="{% url 'tool:index' %}">Go back to the home page</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

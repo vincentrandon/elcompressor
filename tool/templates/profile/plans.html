@@ -1,0 +1,36 @@
+{% extends 'base_user.html' %}
+{% block title %} Plans {% endblock %}
+
+{% block content %}
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+
+        <h2 class="mx-auto mt-8 max-w-6xl text-lg font-medium leading-6 text-gray-900">
+            Manage plans</h2>
+        <div class="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2">
+            <div class="overflow-hidden rounded-lg bg-white shadow">
+                <div class="p-5">
+                    <div class="flex items-center justify-between">
+                        <h3>Subscription</h3>
+                    </div>
+                    <div>
+                        {% include 'profile/partials/partial-manage-plan.html' %}
+                    </div>
+
+
+                </div>
+            </div>
+            {% if suscribed_user.stripe_subscription_status and not suscribed_user.subscription_cancelled  %}
+            <div class="overflow-hidden rounded-lg bg-red-100 shadow">
+                <div class="p-5">
+                    <div>
+                        {% include 'profile/partials/partial-cancel-plan.html' %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+
+        </div>
+    </div>
+
+{% endblock %}

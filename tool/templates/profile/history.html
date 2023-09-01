@@ -1,0 +1,75 @@
+{% extends 'base_user.html' %}
+{% block title %} History {% endblock %}
+
+{% block content %}
+    {% load template_filters %}
+
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+
+        <h2 class="mx-auto mt-8 max-w-6xl text-lg font-medium leading-6 text-gray-900">
+            History</h2>
+        {% if not images %}
+            <div class="text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="mx-auto h-12 w-12 text-gray-400">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
+                </svg>
+
+                <h3 class="mt-2 text-sm font-semibold text-gray-900">No images yet!</h3>
+                <p class="mt-1 text-sm text-gray-500">Get started by uploading your first images.</p>
+            </div>
+        {% else %}
+            <div class="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-1">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead>
+                    <tr>
+                        <th class="bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
+                            scope="col">Image
+                        </th>
+                        <th class="bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900"
+                            scope="col">Compression
+                        </th>
+                        <th class="hidden bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900 md:block"
+                            scope="col">Status
+                        </th>
+                        <th class="bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900"
+                            scope="col">Date
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 bg-white">
+                    {% for image in images %}
+                        <tr class="bg-white">
+                            <td class="w-full max-w-0 whitespace-nowrap px-6 py-4 text-sm text-gray-900">
+                                <div class="flex">
+                                        <span class="group inline-flex space-x-2 truncate text-sm">
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                 stroke-width="1.5" stroke="currentColor"
+                                                 class="h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500">
+                                              <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
+                                            </svg>
+
+                                            <p class="truncate text-gray-500 group-hover:text-gray-900">{{ image.title }}</p>
+                                        </span>
+                                </div>
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-500">
+                                <span class="font-medium text-gray-900">{{ image.size|variation_rate:image.size_after_compression }}%</span>
+                            </td>
+                            <td class="hidden whitespace-nowrap px-6 py-4 text-sm text-gray-500 md:block">
+                                <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-green-100 text-green-800 capitalize">success</span>
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-500">
+                                <time datetime="2020-07-11">{{ image.date|date:"d/m/Y" }}</time>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

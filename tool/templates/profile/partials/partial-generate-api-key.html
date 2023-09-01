@@ -1,0 +1,66 @@
+<div class="py-3">
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+                <div class="bg-red-200 text-red-800 px-4 py-2 rounded">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <div class="text-sm">
+        {% if not user_api_key %}
+            <form hx-post="{% url 'accounts:generate-api-key' %}" hx-target="#generate-api-key">
+                {% csrf_token %}
+                <button type="submit" class="mt-4 bg-orange-600 text-white px-4 py-2 rounded">Generate API Key</button>
+            </form>
+        {% else %}
+            <span>You already have an API Key!</span>
+            <div class="mt-4">
+                <input id="apiKey" type="text" class="px-4 py-2 border rounded bg-gray-100 text-gray-600 blur-sm"
+                       value="{{ user_api_key.first.hashed_key }}" readonly>
+                <button id="copyButton" class="ml-2 px-4 py-2 bg-orange-600 text-white rounded" onclick="copyApiKey()">
+                    Copy
+                </button>
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+
+<script>
+    function copyApiKey() {
+    /* Get the text field */
+    var copyText = document.getElementById("apiKey");
+
+    /* Remove blur effect */
+    copyText.classList.remove("blur-sm");
+
+    /* Select the text field */
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+    /* Copy the text inside the text field */
+    document.execCommand("copy");
+
+
+
+    /* Alert the copied text */
+    var copyButton = document.getElementById("copyButton");
+    copyButton.textContent = "Copied!";
+    setTimeout(function() {
+        copyButton.textContent = "Copy";
+        copyText.classList.add("blur-sm");
+    }, 2000);
+
+    /* We display the toast-api-key */
+    var toast = document.getElementById("toast-api-key");
+    toast.classList.remove("hidden");
+    setTimeout(function() {
+        toast.classList.add("hidden");
+    }, 2000);
+
+
+}
+</script>
+

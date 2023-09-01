@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Contact us {% endblock %}
+{% block content %}
+    <div class="bg-gray-900 pt-10 sm:pt-16 lg:overflow-hidden lg:pt-2 lg:pb-14">
+        <div class="mx-auto max-w-9xl lg:px-5">
+            <div class="lg:grid">
+                <div class="mx-auto px-6 sm:max-w-2xl sm:text-center lg:items-center lg:px-0 lg:text-left">
+                    <div class="lg:py-5">
+                        <h1 class="mt-4 text-4xl font-bold tracking-tight text-white sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl">
+                            <span class="block">Contact</span>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="mx-auto max-w-md px-6 mb-10 text-center sm:max-w-3xl lg:max-w-5xl lg:px-8">
+            <div class="mt-12">
+                <form method="post" class="mx-auto mt-16 max-w-xl sm:mt-20">
+                    {% csrf_token %}
+                    <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+                        <div>
+                            <label for="first-name" class="block text-sm font-semibold leading-6 text-gray-900">First
+                                name</label>
+                            <div class="mt-2.5">
+                                {{ form.first_name }}
+                            </div>
+                        </div>
+                        <div>
+                            <label for="last-name" class="block text-sm font-semibold leading-6 text-gray-900">Last
+                                name</label>
+                            <div class="mt-2.5">
+                                {{ form.name }}
+                            </div>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="email" class="block text-sm font-semibold leading-6 text-gray-900">Email</label>
+                            <div class="mt-2.5">
+                                {{ form.email }}
+                            </div>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="message"
+                                   class="block text-sm font-semibold leading-6 text-gray-900">Message</label>
+                            <div class="mt-2.5">
+                                {{ form.message }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-10">
+                        <button type="submit"
+                                class="block w-full rounded-md bg-orange-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-orange-500">
+                            Let's talk!
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    <!-- CTA Section -->
+    <div class="relative bg-gray-900">
+        <div class="relative h-56 bg-orange-600 sm:h-72 md:absolute md:left-0 md:h-full md:w-1/2">
+            <img class="h-full w-full object-cover"
+                 src="https://plus.unsplash.com/premium_photo-1661515387822-eb613a27901c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80"
+                 alt="">
+            <div aria-hidden="true"
+                 class="absolute inset-0 bg-orange-600 opacity-40"></div>
+        </div>
+        <div class="relative mx-auto max-w-md py-12 px-6 sm:max-w-7xl sm:py-20 md:py-28 lg:px-8 lg:py-32">
+            <div class="md:ml-auto md:w-1/2 md:pl-10">
+                <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">Go <span
+                        class="text-orange-600 font-bold">big</span> or go home</p>
+                <p class="mt-3 text-lg text-gray-300">Save yourself a lot of trouble by using our compressing tool.
+                    <span class="text-orange-600">elcompressor</span> can save you hundreds of hours by automating
+                    images compression.</p>
+                <p class="mt-3 text-lg text-gray-300">Not convinced yet? Drop us a line and we will be happy to help
+                    you.</p>
+                <div class="mt-8">
+                    <div class="flex rounded-md shadow space-x-2">
+                        <a href="{% url 'accounts:signup' %}"
+                           class="inline-flex items-center justify-center rounded-md border border-transparent bg-orange-600 px-5 py-3 text-base font-medium text-white hover:bg-orange-500">
+                            Register now!
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

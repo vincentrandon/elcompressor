@@ -1,0 +1,223 @@
+{% load tailwind_tags %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html class="h-full">
+<head>
+    {% tailwind_css %}
+    <script defer src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <link href="https://releases.transloadit.com/uppy/v3.13.0/uppy.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.4"
+            integrity="sha384-zUfuhFKKZCbHTY6aRR46gxiqszMk5tcHjsVFxnUo8VMus4kHGVdIYVbOYYNlKmHV"
+            crossorigin="anonymous"></script>
+
+
+    <title>{% block title %}{% endblock %} - elcompressor</title>
+
+
+</head>
+<div class="min-h-full">
+
+    <!-- Static sidebar for desktop -->
+    <div class="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
+        <!-- Sidebar component, swap this element with another sidebar if you like -->
+        <div class="flex flex-grow flex-col overflow-y-auto bg-gray-900 pb-4 pt-5">
+            <div class="flex flex-shrink-0 items-center px-4">
+                <a href="{% url 'tool:index' %}">
+                <img class="h-8 w-auto" src="{% static 'home/assets/compress_logotype.png' %}"
+                     alt="elcompressor logo">
+                </a>
+
+            </div>
+            <nav class="mt-5 flex flex-1 flex-col divide-y divide-cyan-800 overflow-y-auto" aria-label="Sidebar">
+                <div class="space-y-1 px-2">
+                    <!-- Profile -->
+                    {% if request.resolver_match.view_name == 'accounts:profile' %}
+                        <a href="{% url 'accounts:profile' %}"
+                           class="text-white group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 bg-orange-600"
+                           aria-current="page">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="mr-4 h-6 w-6 flex-shrink-0 text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            My account
+                        </a>
+                    {% else %}
+                        <a href="{% url 'accounts:profile' %}"
+                           class="text-orange-100 group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 hover:bg-orange-600 hover:text-white"
+                           aria-current="page">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="mr-4 h-6 w-6 flex-shrink-0 text-orange-200">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            My account
+                        </a>
+                    {% endif %}
+                    <!-- Security -->
+                    {% if request.resolver_match.view_name == 'accounts:security' %}
+                        <a href="{% url 'accounts:security' %}"
+                           class="text-white group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 bg-orange-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor"
+                                 class="mr-4 h-6 w-6 flex-shrink-0 text-orange-200 hover:text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+                            </svg>
+                            Security
+                        </a>
+                    {% else %}
+                        <a href="{% url 'accounts:security' %}"
+                           class="text-orange-100 group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 hover:text-white hover:bg-orange-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor"
+                                 class="mr-4 h-6 w-6 flex-shrink-0 text-orange-200 hover:text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+                            </svg>
+                            Security
+                        </a>
+                    {% endif %}
+                    <!-- History -->
+                    {% if request.resolver_match.view_name == 'accounts:history-images' %}
+                        <a href="{% url 'accounts:history-images' %}"
+                           class="text-white group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 bg-orange-600">
+                            <svg class="mr-4 h-6 w-6 flex-shrink-0 text-orange-200 hover:text-white" fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            History
+                        </a>
+                    {% else %}
+                        <a href="{% url 'accounts:history-images' %}"
+                           class="text-orange-100 group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 hover:text-white hover:bg-orange-600">
+                            <svg class="mr-4 h-6 w-6 flex-shrink-0 text-orange-200 hover:text-white" fill="none"
+                                 viewBox="0 0 24 24"
+                                 stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            History
+                        </a>
+                    {% endif %}
+                    {% if request.resolver_match.view_name == 'accounts:plans' %}
+                        <a href="{% url 'accounts:plans' %}"
+                           class="text-white group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 bg-orange-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor"
+                                 class="mr-4 h-6 w-6 flex-shrink-0 text-orange-200 hover:text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3"/>
+                            </svg>
+                            Plans
+                        </a>
+                    {% else %}
+                        <a href="{% url 'accounts:plans' %}"
+                           class="text-orange-100 group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 hover:text-white hover:bg-orange-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor"
+                                 class="mr-4 h-6 w-6 flex-shrink-0 text-orange-200 hover:text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3"/>
+                            </svg>
+                            Plans
+                        </a>
+                    {% endif %}
+                    {% if request.resolver_match.view_name == 'accounts:billing' %}
+                        <a href="{% url 'accounts:billing' %}"
+                           class="text-white group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 bg-orange-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor"
+                                 class="mr-4 h-6 w-6 flex-shrink-0 text-orange-200 hover:text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/>
+                            </svg>
+                            Billing
+                        </a>
+                    {% else %}
+                        <a href="{% url 'accounts:billing' %}"
+                           class="text-orange-100 group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 hover:text-white hover:bg-orange-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor"
+                                 class="mr-4 h-6 w-6 flex-shrink-0 text-orange-200 hover:text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/>
+                            </svg>
+                            Billing
+                        </a>
+                    {% endif %}
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="flex flex-1 flex-col lg:pl-64">
+        <div class="flex h-16 flex-shrink-0 bg-white">
+            <button type="button"
+                    class="border-r border-gray-200 px-4 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500 lg:hidden">
+                <span class="sr-only">Open sidebar</span>
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                     aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M3.75 6.75h16.5M3.75 12H12m-8.25 5.25h16.5"/>
+                </svg>
+            </button>
+            <!-- Search bar -->
+            <div class="flex flex-1 justify-between px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
+                <div class="flex flex-1">
+                </div>
+                <div class="ml-4 flex items-center md:ml-6">
+                    {% if global_subscribed_user.stripe_subscription_status %}
+                        <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Premium</span>
+                    {% else %}
+                        <a href="{% url 'accounts:plans' %}"
+                           class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Upgrade</a>
+                    {% endif %}
+
+                    <!-- Profile dropdown -->
+                    <div class="relative ml-3" x-data="{showProfileDropDown: false}">
+                        <div>
+                            <button type="button" @click="showProfileDropDown = !showProfileDropDown"
+                                    @click.outside="showProfileDropDown = false"
+                                    class="relative flex max-w-xs items-center rounded-full text-sm lg:rounded-md lg:p-2"
+                                    id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                                <span class="absolute -inset-1.5 lg:hidden"></span>
+                                <img class="h-8 w-8 rounded-full"
+                                     src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                     alt="">
+                            </button>
+                        </div>
+                        <div class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                             role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
+                             tabindex="-1" x-show="showProfileDropDown">
+                            <!-- Active: "bg-gray-100", Not Active: "" -->
+                            <a href="{% url 'accounts:profile' %}"
+                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                               role="menuitem" tabindex="-1"
+                               id="user-menu-item-0">Your Profile</a>
+                            <a href="{% url 'accounts:logout' %}"
+                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                               role="menuitem" tabindex="-1"
+                               id="user-menu-item-2">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <main class="flex-1 pb-8">
+            <!-- Page header -->
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+</div>
+
+</html>

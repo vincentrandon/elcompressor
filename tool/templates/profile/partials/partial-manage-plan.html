@@ -1,0 +1,65 @@
+<div class="py-3">
+    <div class="text-sm">
+        {% if suscribed_user.subscription_cancelled and suscribed_user.stripe_subscription_status %}
+            <p>Your subscription has been cancelled, you'll have access to premium features until
+                <b>{{ suscribed_user.subscription_ending_date|date:"d/m/y" }}.</b></p>
+            <div class="mt-5 flex flex-col space-y-1 rounded-md bg-orange-600 text-white items-center justify-center p-2">
+                <span class="text-xl">Did you change your mind?</span>
+                <form>
+                    <button id="subscribeButton" class="mt-4 bg-white px-4 py-2 rounded text-orange-600">Subscribe to
+                        premium
+                    </button>
+                </form>
+            </div>
+
+
+        {% elif suscribed_user.stripe_subscription_status %}
+
+            <p>You're already suscribed to the premium plan. Your subscription will renew automatically every month.
+                Your next payment is due on <b>{{ suscribed_user.subscription_ending_date|date:"d/m/y" }}.</b></p>
+        {% else %}
+            <p>You're currently under the free plan. You're limited too 100 images per month.</p>
+            <p>To get full access to <span class="font-bold text-orange-600">elcompressor</span> features (including
+                unlimited images and access to the API), you need to subscribe to the <b>premium plan</b>.</p>
+            <form>
+                <button id="subscribeButton" class="mt-4 bg-orange-600 text-white px-4 py-2 rounded">Subscribe to
+                    premium
+                </button>
+            </form>
+        {% endif %}
+    </div>
+
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    console.log('Hello from main.js')
+    // Get stripe public key
+    fetch("{% url 'accounts:payment' %}")
+        .then((result) => {
+            return result.json();
+        })
+        .then((data) => {
+            // Initialize Stripe.js
+            const stripe = Stripe(data.publicKey);
+
+            let subscribeButton = document.querySelector("#subscribeButton");
+            if (subscribeButton !== null) {
+                subscribeButton.addEventListener("click", (e) => {
+                    e.preventDefault()
+                    // Get Checkout Session ID
+                    fetch("{% url 'accounts:create-checkout-session' %}")
+                        .then((result) => {
+                            return result.json();
+                        })
+                        .then((data) => {
+                            // Redirect to Stripe Checkout
+                            return stripe.redirectToCheckout({sessionId: data.sessionId})
+                        })
+                        .then((res) => {
+                            console.log(res);
+                        });
+                });
+            }
+        });
+</script>
